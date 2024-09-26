@@ -19,7 +19,7 @@ namespace GameCollection.Pages.Tyler
             _context = context;
         }
 
-      public Games Games { get; set; } = default!; 
+      public Games Games { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {

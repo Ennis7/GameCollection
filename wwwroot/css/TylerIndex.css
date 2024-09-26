@@ -1,0 +1,41 @@
+﻿.table th, .table td {
+    vertical-align: middle;
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+}
+
+.table {
+    margin-top: 20px;
+}
+
+.form-inline .form-control {
+    margin-right: 10px;
+}
+
+.form-inline .btn {
+    margin-right: 5px;
+}
+
+.row {
+    margin-top: 20px;
+}
+
+h2, h4 {
+    color: #343a40; 
+}
+
+footer {
+    background-color: #f8f9fa; 
+    padding: 10px 0;
+}
+
+.footer a {
+    color: #007bff; 
+}
+
+    .footer a:hover {
+        text-decoration: underline; 
+    }
