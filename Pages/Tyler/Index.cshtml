@@ -36,7 +36,58 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Title</th>
+                        <th>
+                            <a asp-page="./Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" class="text-dark">
+                                Title
+                                @if (ViewData["TitleSortParm"].ToString() == "title_desc")
+                                {
+                                    <span>&darr;</span> <!-- Down arrow for descending -->
+                                }
+                                else if (ViewData["TitleSortParm"].ToString() == "")
+                                {
+                                    <span>&uarr;</span> <!-- Up arrow for ascending -->
+                                }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-page="./Index" asp-route-sortOrder="@ViewData["GenreSortParm"]" class="text-dark">
+                                Genre
+                                @if (ViewData["GenreSortParm"].ToString() == "genre_desc")
+                                {
+                                    <span>&darr;</span>
+                                }
+                                else if (ViewData["GenreSortParm"].ToString() == "Genre")
+                                {
+                                    <span>&uarr;</span>
+                                }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-page="./Index" asp-route-sortOrder="@ViewData["ReleaseDateSortParm"]" class="text-dark">
+                                Release Date
+                                @if (ViewData["ReleaseDateSortParm"].ToString() == "releaseDate_desc")
+                                {
+                                    <span>&darr;</span>
+                                }
+                                else if (ViewData["ReleaseDateSortParm"].ToString() == "ReleaseDate")
+                                {
+                                    <span>&uarr;</span>
+                                }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-page="./Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" class="text-dark">
+                                Price
+                                @if (ViewData["PriceSortParm"].ToString() == "price_desc")
+                                {
+                                    <span>&darr;</span>
+                                }
+                                else if (ViewData["PriceSortParm"].ToString() == "Price")
+                                {
+                                    <span>&uarr;</span>
+                                }
+                            </a>
+                        </th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -45,7 +96,10 @@
                     {
                         <tr>
                             <td>@game.Title</td>
-                            <td>
+                            <td>@game.GenreType</td>
+                            <td>@game.ReleaseDate.ToString("MM/dd/yyyy")</td>
+                            <td>@game.Price.ToString("C")</td>
+                            <td class="text-nowrap">
                                 <a asp-page="./Index" asp-route-id="@game.ID" class="btn btn-primary">Select</a>
                                 <a asp-page="./Edit" asp-route-id="@game.ID" class="btn btn-primary">Edit</a>
                                 <a asp-page="./Delete" asp-route-id="@game.ID" class="btn btn-danger">Delete</a>
@@ -54,6 +108,7 @@
                     }
                 </tbody>
             </table>
+
         </div>
 
         <!-- Right Panel: Game Details Section -->
