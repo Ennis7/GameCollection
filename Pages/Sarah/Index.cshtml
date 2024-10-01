@@ -1,41 +1,104 @@
 ﻿@page
 @model GameCollection.Pages.Sarah.IndexModel
+@using GameCollection.Models
 
 @{
     ViewData["Title"] = "Index";
 }
+<link rel="stylesheet" href="~/css/Sarah.css" asp-append-version="true" />
+<div class="Header">
+<h1>Sarah</h1>
+</div>
 
-<h1>Index</h1>
+<div class="row">
+    <div class="col-md-3 sidebar">
+        <form method="POST">
+    <p>
+        <a asp-page="Create">Create New</a>
+    </p>
+    <p>
+        Search: <input type="text" asp-for="SearchString" />
+    </p>
+    <p>
+        <!-- <select asp-for="SelectedGenre" asp-items="Html.GetEnumSelectList<Genre>()"></select> -->
+        Genre:  
+        @{
+            var genres = Enum.GetValues(typeof(Genre)).Cast<Genre>().Select(g => new SelectListItem
+            {
+                Value = g.ToString(),
+                Text = g.ToString()
+            }).ToList();
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
+            genres.Insert(0, new SelectListItem
+            {
+                Value = "None",
+                Text = "None"
+            });
+        }
+        <select asp-for="SelectedGenre" asp-items="genres">
+        </select>
+        <fieldset>
+            <legend class="price-select">Select Price Range:</legend>
+            <label>
+                <input type="radio" name="SelectedPrice" value="50" @(Model.SelectedPrice == 50 ? "checked" : "")/>
+                Less than $50
+            </label>
+            <br />
+            <label>
+                <input type="radio" name="SelectedPrice" value="40" @(Model.SelectedPrice == 40 ? "checked" : "") />
+                Less than $40
+            </label>
+            <br />
+            <label>
+                <input type="radio" name="SelectedPrice" value="30" @(Model.SelectedPrice == 30 ? "checked" : "") />
+                Less than $30
+            </label>
+            <br />
+            <label>
+                <input type="radio" name="SelectedPrice" value="20" @(Model.SelectedPrice == 20 ? "checked" : "") />
+                Less than $20
+            </label>
+        </fieldset>
+    </p>
+    <p>
+        <input class="btn btn-primary" type="submit" value="Search" />
+        <button class="btn btn-secondary" type="button" onclick="window.location.href='@Url.Page("Index")'">Clear</button>
+    </p>
+        </form>
+    </div>
+    <div class="col-md-9 list">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Games[0].Title)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSort">
+		            @Html.DisplayNameFor(model => model.Games[0].Title)
+	            </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Games[0].GenreType)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.GenreSort">
+                    Genre
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Games[0].Developer)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DeveloperSort">
+		            @Html.DisplayNameFor(model => model.Games[0].Developer)
+	            </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Games[0].ReleaseDate)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.DateSort">
+                    Release Date
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Games[0].Price)
+                <a asp-page="./Index" asp-route-sortOrder="@Model.PriceSort">
+                    @Html.DisplayNameFor(model => model.Games[0].Price)
+                </a>
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Games[0].Owner)
-            </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Games) {
+@foreach (var item in Model.FilteredGames) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -63,4 +126,6 @@
         </tr>
 }
     </tbody>
-</table>
+        </table>
+    </div>
+</div>

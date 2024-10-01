@@ -1,5 +1,6 @@
 ﻿@page
 @model GameCollection.Pages.Sarah.CreateModel
+@using GameCollection.Models
 
 @{
     ViewData["Title"] = "Create";
@@ -20,7 +21,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Games.GenreType" class="control-label"></label>
-                <select asp-for="Games.GenreType" class="form-control"></select>
+                @Html.DropDownList("Games.GenreType", Html.GetEnumSelectList<Genre>(), "Select Genre", new { @class = "form-control" })
                 <span asp-validation-for="Games.GenreType" class="text-danger"></span>
             </div>
             <div class="form-group">
