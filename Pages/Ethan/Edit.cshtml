@@ -1,0 +1,116 @@
+﻿@page
+@model GameCollection.Pages.Ethan.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+<h1>Edit</h1>
+<head>
+
+    <style>
+        h3 {
+            font-size: 2em;
+            color: blue;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4em;
+            color: blue;
+            background-color: black;
+            border: 5px solid black;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        thead {
+            text-align: center;
+        }
+
+        tr {
+            color: black;
+            text-align: center;
+            border: 2px solid black;
+            font-size: 1.5em;
+        }
+
+        th {
+            color: black;
+            font-size: 2em;
+            border: 3px solid black;
+        }
+
+        form {
+            background-color: black;
+            color:white;
+            text-align:center;
+            font-size:2em;
+        }
+
+        p {
+            color: green;
+            font-size: 1.5em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: darkviolet;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+
+    </style>
+</head>
+<h4>Games</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Games.ID" />
+            <div class="form-group">
+                <label asp-for="Games.Title" class="control-label"></label>
+                <input asp-for="Games.Title" class="form-control" />
+                <span asp-validation-for="Games.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.GenreType" class="control-label"></label>
+                <select asp-for="Games.GenreType" asp-items="Html.GetEnumSelectList<Models.Genre>()" class="form-control">
+                    <option value="">Choose Genre</option>
+                </select>
+                <span asp-validation-for="Games.GenreType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.Developer" class="control-label"></label>
+                <input asp-for="Games.Developer" class="form-control" />
+                <span asp-validation-for="Games.Developer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.ReleaseDate" class="control-label"></label>
+                <input asp-for="Games.ReleaseDate" class="form-control" />
+                <span asp-validation-for="Games.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.Price" class="control-label"></label>
+                <input asp-for="Games.Price" class="form-control" />
+                <span asp-validation-for="Games.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.OwnerID" class="control-label"></label>
+                <select asp-for="Games.OwnerID" class="form-control" asp-items="ViewBag.OwnerID"></select>
+                <span asp-validation-for="Games.OwnerID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

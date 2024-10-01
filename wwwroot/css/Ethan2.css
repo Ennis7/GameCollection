@@ -1,0 +1,45 @@
+﻿h3 {
+    font-size: 2em;
+    color: blue;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-align: center;
+}
+
+h1 {
+    font-size:4em;
+    color: blue;
+    background-color:black;
+    border: 5px solid black;
+    text-align: center;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+thead {
+    text-align: center;
+}
+
+tr {
+    color: black;
+    text-align: center;
+    border:2px solid black;
+    font-size:1.5em;
+}
+
+th {
+    color: black;
+    font-size: 2em;
+    border: 3px solid black;
+}
+form{
+    text-align:center;
+    background-color:black;
+}
+p{
+    color:green;
+    font-size:1.5em;
+}
+h2{
+    font-size:1.5em;
+    color:darkviolet;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}

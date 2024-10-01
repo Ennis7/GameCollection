@@ -1,66 +1,145 @@
 ﻿@page
 @model GameCollection.Pages.Tyler.IndexModel
-
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Games App";
 }
 
-<h1>Index</h1>
+<link rel="stylesheet" href="~/css/TylerIndex.css" asp-append-version="true" />
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Games[0].Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Games[0].GenreType)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Games[0].Developer)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Games[0].ReleaseDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Games[0].Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Games[0].Owner)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Games) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GenreType)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Developer)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Owner.ID)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container">
+    <div class="row">
+        <!-- Left Panel: Games List -->
+        <div class="col-md-6">
+            <h2 class="text-primary">Game Collection App</h2>
+            <h4>Games</h4>
+
+            <form method="get" class="mb-3">
+                <div class="form-inline">
+                    <input type="text" name="searchString" value="@Model.CurrentFilter" class="form-control mr-2 mb-2" placeholder="Search" />
+                    <select name="genreFilter" class="form-control mr-2 mb-2">
+                        <option value="">Filter List</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Action">Action</option>
+                        <option value="OpenWorld">OpenWorld</option>
+                        <option value="Fighting">Fighting</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Horror">Horror</option>
+                        <option value="FPS">FPS</option>
+                        <option value="Puzzle">Puzzle</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary mr-2 mb-2">Filter List</button>
+                    <a asp-page="Create" class="btn btn-success mr-2 mb-2">Add Game</a>
+                    <button type="button" class="btn btn-secondary mb-2" onclick="window.location.href='@Url.Page("Index")'">Clear Filters</button>
+                </div>
+            </form>
+
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            <a asp-page="./Index" asp-route-sortOrder="@ViewData["TitleSortParm"]" class="text-dark">
+                                Title
+                                @if (ViewData["TitleSortParm"].ToString() == "title_desc")
+                                {
+                                    <span>&darr;</span> <!-- Down arrow for descending -->
+                                }
+                                else if (ViewData["TitleSortParm"].ToString() == "")
+                                {
+                                    <span>&uarr;</span> <!-- Up arrow for ascending -->
+                                }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-page="./Index" asp-route-sortOrder="@ViewData["GenreSortParm"]" class="text-dark">
+                                Genre
+                                @if (ViewData["GenreSortParm"].ToString() == "genre_desc")
+                                {
+                                    <span>&darr;</span>
+                                }
+                                else if (ViewData["GenreSortParm"].ToString() == "Genre")
+                                {
+                                    <span>&uarr;</span>
+                                }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-page="./Index" asp-route-sortOrder="@ViewData["ReleaseDateSortParm"]" class="text-dark">
+                                Release Date
+                                @if (ViewData["ReleaseDateSortParm"].ToString() == "releaseDate_desc")
+                                {
+                                    <span>&darr;</span>
+                                }
+                                else if (ViewData["ReleaseDateSortParm"].ToString() == "ReleaseDate")
+                                {
+                                    <span>&uarr;</span>
+                                }
+                            </a>
+                        </th>
+                        <th>
+                            <a asp-page="./Index" asp-route-sortOrder="@ViewData["PriceSortParm"]" class="text-dark">
+                                Price
+                                @if (ViewData["PriceSortParm"].ToString() == "price_desc")
+                                {
+                                    <span>&darr;</span>
+                                }
+                                else if (ViewData["PriceSortParm"].ToString() == "Price")
+                                {
+                                    <span>&uarr;</span>
+                                }
+                            </a>
+                        </th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var game in Model.Games)
+                    {
+                        <tr>
+                            <td>@game.Title</td>
+                            <td>@game.GenreType</td>
+                            <td>@game.ReleaseDate.ToString("MM/dd/yyyy")</td>
+                            <td>@game.Price.ToString("C")</td>
+                            <td class="text-nowrap">
+                                <a asp-page="./Index" asp-route-id="@game.ID" class="btn btn-primary">Select</a>
+                                <a asp-page="./Edit" asp-route-id="@game.ID" class="btn btn-primary">Edit</a>
+                                <a asp-page="./Delete" asp-route-id="@game.ID" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+
+        <!-- Right Panel: Game Details Section -->
+        <div class="col-md-6">
+            @if (Model.SelectedGame != null)
+            {
+                <h4 class="text-info">Game Details</h4>
+                <dl class="row">
+                    <dt class="col-sm-4">Title</dt>
+                    <dd class="col-sm-8">@Model.SelectedGame.Title</dd>
+
+                    <dt class="col-sm-4">Genre</dt>
+                    <dd class="col-sm-8">@Model.SelectedGame.GenreType</dd>
+
+                    <dt class="col-sm-4">Developer</dt>
+                    <dd class="col-sm-8">@Model.SelectedGame.Developer</dd>
+
+                    <dt class="col-sm-4">Release Date</dt>
+                    <dd class="col-sm-8">@Model.SelectedGame.ReleaseDate.ToString("MM/dd/yyyy")</dd>
+
+                    <dt class="col-sm-4">Price</dt>
+                    <dd class="col-sm-8">@Model.SelectedGame.Price.ToString("C")</dd>
+                </dl>
+
+                <div class="form-group">
+                    <a asp-page="./Edit" asp-route-id="@Model.SelectedGame.ID" class="btn btn-primary">Save</a>
+                    <a asp-page="./Index" class="btn btn-danger">Cancel</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

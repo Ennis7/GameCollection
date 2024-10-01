@@ -1,0 +1,83 @@
+﻿@page
+@model GameCollection.Pages.Kazi.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+<style>
+    body {
+        background-color: azure; 
+    }
+    .form-container {
+        border: 2px solid #007bff; 
+        border-radius: 8px; 
+        padding: 20px; 
+        background-color: #ffffff; 
+        margin: 20px; 
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .highlight {
+        background-color: black; 
+        color: #ffffff; 
+        padding: 5px; 
+        border-radius: 4px; 
+    }
+</style>
+
+<h1><span class="highlight">Index</span></h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<form method="get">
+    <input type="text" name="titleSearch" value="@Model.TitleSearch" placeholder="Search by title..." />
+    <input type="text" name="genreSearch" value="@Model.GenreSearch" placeholder="Search by genre..." />
+    <input type="text" name="minPrice" value="@Model.MinPrice" placeholder="Min price..." />
+    <input type="text" name="maxPrice" value="@Model.MaxPrice" placeholder="Max price..." />
+    <button type="submit">Search</button>
+</form>
+
+<table class="table">
+    <thead>
+        <tr style="background-color:black;box-shadow:2px 2px white;">
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.TitleSortOrder == "title_desc" ? "title" : "title_desc")">Title</a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.GenreSortOrder == "genre_desc" ? "genre" : "genre_desc")">Genre Type</a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.DeveloperSortOrder == "developer_desc" ? "developer" : "developer_desc")">Developer</a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.ReleaseDateSortOrder == "releaseDate_desc" ? "releaseDate" : "releaseDate_desc")">Release Date</a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.PriceSortOrder == "price_desc" ? "price" : "price_desc")">Price</a>
+            </th>
+            <th>
+                <a asp-page="./Index" asp-route-sortOrder="@(Model.OwnerSortOrder == "owner_desc" ? "owner" : "owner_desc")">Owner</a>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Games)
+        {
+                        <tr style="border-bottom: black 10px groove;">
+                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                        <td>@Html.DisplayFor(modelItem => item.GenreType)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Developer)</td>
+                        <td>@Html.DisplayFor(modelItem => item.ReleaseDate)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Owner.ID)</td>
+                        <td>
+                            <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                            <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                            <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> |
+                        </td>
+                        </tr>
+        }
+    </tbody>
+</table>

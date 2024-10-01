@@ -1,0 +1,170 @@
+﻿@page
+@model GameCollection.Pages.Ethan.IndexModel
+@{
+    ViewData["Title"] = "Ethan";
+}
+<head>
+
+
+    <style>
+        body {
+            background-image: url('https://c4.wallpaperflare.com/wallpaper/615/476/58/video-game-collage-wallpaper-preview.jpg');
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        h3 {
+            font-size: 2em;
+            color: blue;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 4em;
+            color: blue;
+            background-color: black;
+            border: 5px solid black;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+        }
+
+        thead {
+            text-align: center;
+            background-color:black;
+        }
+
+        tr {
+            color: darkviolet;
+            text-align: center;
+            border: 3px solid yellow;
+            font-size: 1em;
+            background-color:black;
+        }
+
+        th {
+            color: white;
+            font-size: 2em;
+            border: 3px solid yellow;
+            background-color:black;
+        }
+
+        form {
+            text-align: center;
+            background-color: black;
+        }
+
+        p {
+            color: green;
+            font-size: 1.5em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            color: darkviolet;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        }
+        body{
+            background-color:black;
+        }
+
+
+    </style>
+</head>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<body>
+    <h1>Ethan</h1>
+
+    <p>
+        <a asp-page="Create">New Entry</a>
+    </p>
+    <div class="bruh">
+        <form method="Get">
+            <h2>FILTERS</h2>
+            <p>
+                Game Name: <input type="text" asp-for="SearchString" />
+            </p>
+            <p>
+                Developer: <input type="text" asp-for="SearchDeveloper" />
+            </p>
+            <p>
+                Release Date: <input type="date" asp-for="SearchRelease" />
+            </p>
+            <p>
+                Minimum Price: <input type="number" asp-for="MinPrice" step="0.01" />
+            </p>
+            <p>
+                Max Price (up to 9999): <input type="number" asp-for="MaxPrice" step="0.01" />
+            </p>
+            <p>
+                <input type="submit" value="Filter" />
+            </p>
+            <a asp-page="./Ethan" asp-route-sortOrder="asc">Title (ascending)</a>
+            <a asp-page="./Ethan" asp-route-sortOrder="desc">Title (descending)</a>
+        </form>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.TitleSort">Flip</a>
+                    @Html.DisplayNameFor(model => model.Games[0].Title)
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.GenreSort">Flip</a>
+                    @Html.DisplayNameFor(model => model.Games[0].GenreType)
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.GenreSort">Flip</a>
+                    @Html.DisplayNameFor(model => model.Games[0].Developer)
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.ReleaseDateSort">Flip</a>
+                    @Html.DisplayNameFor(model => model.Games[0].ReleaseDate)
+                </th>
+                <th>
+                    <a asp-page="./Index" asp-route-sortOrder="@Model.PriceSort">Flip</a>
+                    @Html.DisplayNameFor(model => model.Games[0].Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Games[0].OwnerID)
+                </th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Games)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GenreType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Developer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ReleaseDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.OwnerID)
+                    </td>
+                    <td>
+                        <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

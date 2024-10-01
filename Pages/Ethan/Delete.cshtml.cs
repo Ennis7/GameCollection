@@ -8,17 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using GameCollection.Data;
 using GameCollection.Models;
 
-namespace GameCollection.Pages.Tyler
+namespace GameCollection.Pages.Ethan
 {
-    public class DetailsModel : PageModel
+    public class DeleteModel : PageModel
     {
         private readonly GameCollection.Data.GameCollectionContext _context;
 
-        public DetailsModel(GameCollection.Data.GameCollectionContext context)
+        public DeleteModel(GameCollection.Data.GameCollectionContext context)
         {
             _context = context;
         }
 
+        [BindProperty]
       public Games Games { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
@@ -29,6 +30,7 @@ namespace GameCollection.Pages.Tyler
             }
 
             var games = await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
+
             if (games == null)
             {
                 return NotFound();
@@ -38,6 +40,24 @@ namespace GameCollection.Pages.Tyler
                 Games = games;
             }
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(int? id)
+        {
+            if (id == null || _context.Games == null)
+            {
+                return NotFound();
+            }
+            var games = await _context.Games.FindAsync(id);
+
+            if (games != null)
+            {
+                Games = games;
+                _context.Games.Remove(Games);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToPage("./Index");
         }
     }
 }
