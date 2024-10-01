@@ -1,7 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 namespace GameCollection.Models
 {
+
     public enum Genre
     {
         Adventure,
@@ -21,8 +24,8 @@ namespace GameCollection.Models
         public string Title { get; set; } = String.Empty;
 
         [Required]
-        [StringLength(60)]
-        public Genre GenreType { get; set; } = Genre.Adventure;
+        public Genre GenreType { get; set; }
+
         [StringLength(60)]
         public string Developer { get; set; } = String.Empty;
 
@@ -41,4 +44,5 @@ namespace GameCollection.Models
         //Navigation Property
         public Owner Owner { get; set; } = null!;
     }
+
 }

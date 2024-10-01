@@ -37,7 +37,7 @@ namespace GameCollection.Migrations
 
                     b.Property<int>("GenreType")
                         .HasMaxLength(30)
-                        .HasColumnType("int");
+                        .HasColumnType("int)");
 
                     b.Property<int>("OwnerID")
                         .HasColumnType("int");
