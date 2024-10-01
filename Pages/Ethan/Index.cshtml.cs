@@ -37,7 +37,10 @@ namespace GameCollection.Pages.Ethan
         [BindProperty(SupportsGet = true)]
         public string SearchDeveloper { get; set; }
         public string TitleSort { get; set; }
+        public string GenreSort { get; set; }
         public string DeveloperSort { get; set; }
+        public string ReleaseDateSort { get; set; }
+        public string PriceSort { get; set; }
 
 
 
@@ -48,14 +51,19 @@ namespace GameCollection.Pages.Ethan
 
         public async Task OnGetAsync(string sortOrder)
         {
-            TitleSort = sortOrder;
-            
+            TitleSort = String.IsNullOrEmpty(sortOrder) ? "TitleDesc" : "";
+            GenreSort = sortOrder == "GenreAsc" ? "GenreDesc" : "GenreAsc";
+            DeveloperSort = sortOrder == "DeveloperAsc" ? "DeveloperDesc" : "DeveloperAsc";
+            ReleaseDateSort = sortOrder == "ReleaseDateAsc" ? "ReleaseDateDesc" : "ReleaseDateAsc";
+            PriceSort = sortOrder == "PriceAsc" ? "PriceDesc" : "PriceAsc";
+
+
             var gameFilter = from g in _context.Games
                              select g;
 
 
             gameFilter = gameFilter.Where(g => g.OwnerID == 2);
-
+            gameFilter = gameFilter.Where(g => g.Price >= MinPrice && g.Price <= MaxPrice);
 
             if (!string.IsNullOrEmpty(SearchString))
             {
@@ -72,16 +80,39 @@ namespace GameCollection.Pages.Ethan
             {
                 gameFilter = gameFilter.Where(g => g.ReleaseDate.Date == SearchRelease.Date);
             }
-            if (TitleSort == "desc")
+            switch (sortOrder)
             {
-                gameFilter = gameFilter.OrderByDescending(g => g.Title);
+                case "TitleDesc":
+                    gameFilter = gameFilter.OrderByDescending(g => g.Title);
+                    break;
+                case "GenreDesc":
+                    gameFilter = gameFilter.OrderByDescending(g => g.GenreType);
+                    break;
+                case "GenreAsc":
+                    gameFilter = gameFilter.OrderBy(g => g.GenreType);
+                    break;
+                case "DeveloperDesc":
+                    gameFilter = gameFilter.OrderByDescending(g => g.Developer);
+                    break;
+                case "DeveloperAsc":
+                    gameFilter = gameFilter.OrderBy(g => g.Developer);
+                    break;
+                case "ReleaseDateDesc":
+                    gameFilter = gameFilter.OrderByDescending(g => g.ReleaseDate);
+                    break;
+                case "ReleaseDateAsc":
+                    gameFilter = gameFilter.OrderBy(g => g.ReleaseDate);
+                    break;
+                case "PriceDesc":
+                    gameFilter = gameFilter.OrderByDescending(g => g.Price);
+                    break;
+                case "PriceAsc":
+                    gameFilter = gameFilter.OrderBy(g => g.Price);
+                    break;
+                default:
+                    gameFilter = gameFilter.OrderBy(g => g.Title);
+                    break;
             }
-            else
-            {
-                gameFilter = gameFilter.OrderBy(g => g.Title);
-            }
-
-            gameFilter = gameFilter.Where(g => g.Price >= MinPrice && g.Price <= MaxPrice);
 
             Games = await gameFilter.ToListAsync();
         }
