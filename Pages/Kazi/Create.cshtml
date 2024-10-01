@@ -1,0 +1,73 @@
+﻿@page
+@model GameCollection.Pages.Kazi.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<style>
+    body {
+        background-color: #f0f8ff;
+    }
+    .highlight {
+        background-color: black;
+        color: #ffffff;
+        padding: 5px;
+        border-radius: 3px;
+    }
+</style>
+
+<h1><span class="highlight">Create</span></h1>
+
+<h4>Games</h4>
+
+<hr />
+
+<div class="row" style="border:double black 2px; border-radius:20px; box-shadow:2px 2px black; padding:20px;">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Games.Title" class="control-label"></label>
+                <input asp-for="Games.Title" class="form-control" />
+                <span asp-validation-for="Games.Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.GenreType" class="control-label"></label>
+                <select asp-for="Games.GenreType" class="form-control"></select>
+                <span asp-validation-for="Games.GenreType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.Developer" class="control-label"></label>
+                <input asp-for="Games.Developer" class="form-control" />
+                <span asp-validation-for="Games.Developer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.ReleaseDate" class="control-label"></label>
+                <input asp-for="Games.ReleaseDate" class="form-control" />
+                <span asp-validation-for="Games.ReleaseDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.Price" class="control-label"></label>
+                <input asp-for="Games.Price" class="form-control" />
+                <span asp-validation-for="Games.Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Games.OwnerID" class="control-label"></label>
+                <select asp-for="Games.OwnerID" class ="form-control" asp-items="ViewBag.OwnerID"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
