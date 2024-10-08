@@ -24,7 +24,6 @@ namespace GameCollection.Models
         public string Title { get; set; } = String.Empty;
 
         [Required]
-        [StringLength(60)]
         public Genre GenreType { get; set; } = Genre.Adventure;
         [StringLength(60)]
         public string Developer { get; set; } = String.Empty;
