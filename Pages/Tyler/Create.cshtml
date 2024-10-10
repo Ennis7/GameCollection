@@ -1,6 +1,5 @@
 ﻿@page
 @model GameCollection.Pages.Tyler.CreateModel
-@using GameCollection.Models
 
 @{
     ViewData["Title"] = "Create";
@@ -21,7 +20,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Games.GenreType" class="control-label"></label>
-                @Html.DropDownList("Games.GenreType", Html.GetEnumSelectList<Genre>(), "Select Genre", new { @class = "form-control" })
+                <select asp-for="Games.GenreType" class="form-control" asp-items="ViewBag.GenreType"></select>
                 <span asp-validation-for="Games.GenreType" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -41,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Games.OwnerID" class="control-label"></label>
-                <select asp-for="Games.OwnerID" class="form-control" asp-items="ViewBag.OwnerID"></select>
+                <select asp-for="Games.OwnerID" class ="form-control" asp-items="ViewBag.OwnerID"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -55,8 +54,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
