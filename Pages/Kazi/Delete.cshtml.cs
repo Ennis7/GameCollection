@@ -20,7 +20,7 @@ namespace GameCollection.Pages.Kazi
         }
 
         [BindProperty]
-      public Games Games { get; set; } = default!;
+        public Games Games { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -35,7 +35,7 @@ namespace GameCollection.Pages.Kazi
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Games = games;
             }

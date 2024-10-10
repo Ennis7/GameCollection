@@ -19,7 +19,7 @@ namespace GameCollection.Pages.Kazi
             _context = context;
         }
 
-      public Games Games { get; set; } = default!; 
+        public Games Games { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -33,7 +33,7 @@ namespace GameCollection.Pages.Kazi
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 Games = games;
             }

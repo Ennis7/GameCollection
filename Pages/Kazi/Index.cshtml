@@ -6,21 +6,23 @@
 }
 <style>
     body {
-        background-color: azure; 
+        background-color: azure;
     }
+
     .form-container {
-        border: 2px solid #007bff; 
-        border-radius: 8px; 
-        padding: 20px; 
-        background-color: #ffffff; 
-        margin: 20px; 
+        border: 2px solid #007bff;
+        border-radius: 8px;
+        padding: 20px;
+        background-color: #ffffff;
+        margin: 20px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
+
     .highlight {
-        background-color: black; 
-        color: #ffffff; 
-        padding: 5px; 
-        border-radius: 4px; 
+        background-color: black;
+        color: #ffffff;
+        padding: 5px;
+        border-radius: 4px;
     }
 </style>
 
@@ -65,19 +67,19 @@
     <tbody>
         @foreach (var item in Model.Games)
         {
-                        <tr style="border-bottom: black 10px groove;">
-                        <td>@Html.DisplayFor(modelItem => item.Title)</td>
-                        <td>@Html.DisplayFor(modelItem => item.GenreType)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Developer)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ReleaseDate)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Owner.ID)</td>
-                        <td>
-                            <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
-                            <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-                            <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> |
-                        </td>
-                        </tr>
+            <tr style="border-bottom: black 10px groove;">
+                <td>@Html.DisplayFor(modelItem => item.Title)</td>
+                <td>@Html.DisplayFor(modelItem => item.GenreType)</td>
+                <td>@Html.DisplayFor(modelItem => item.Developer)</td>
+                <td>@Html.DisplayFor(modelItem => item.ReleaseDate)</td>
+                <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                <td>@Html.DisplayFor(modelItem => item.Owner.ID)</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a> |
+                </td>
+            </tr>
         }
     </tbody>
 </table>

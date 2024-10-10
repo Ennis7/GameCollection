@@ -8,6 +8,7 @@
     body {
         background-color: #f0f8ff;
     }
+
     .highlight {
         background-color: black;
         color: #ffffff;
@@ -33,7 +34,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Games.GenreType" class="control-label"></label>
-                <select asp-for="Games.GenreType" class="form-control"></select>
+                <select asp-for="Games.GenreType" class="form-control" asp-items="@(ViewData["GenreType"] as List<SelectListItem>)"></select>
                 <span asp-validation-for="Games.GenreType" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -53,7 +54,8 @@
             </div>
             <div class="form-group">
                 <label asp-for="Games.OwnerID" class="control-label"></label>
-                <select asp-for="Games.OwnerID" class ="form-control" asp-items="ViewBag.OwnerID"></select>
+                <select asp-for="Games.OwnerID" class="form-control" asp-items="@(ViewBag.OwnerID as SelectList)"></select>
+                <span asp-validation-for="Games.OwnerID" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
