@@ -30,43 +30,43 @@ namespace GameCollection.Pages.Sarah
                 return NotFound();
             }
 
-            var games =  await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
-            if (games == null)
-            {
-                return NotFound();
-            }
-            Games = games;
+           var games =  await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
+            //if (games == null)
+            //{
+                //return NotFound();
+            //}
+           Games = games;
            ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
-            return Page();
+           ViewData["GenreType"] = new SelectList(Enum.GetValues(typeof(Genre)).Cast<Genre>());
+           return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            //if (!ModelState.IsValid)
+            //{
+               // return Page();
+            //}
 
             _context.Attach(Games).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GamesExists(Games.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
+            //try
+            //{
+            //  await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //if (!GamesExists(Games.ID))
+            //{
+            //    return NotFound();
+            //}
+            //else
+            //{
+            //   throw;
+            //}
+                await _context.SaveChangesAsync();   
             return RedirectToPage("./Index");
         }
 

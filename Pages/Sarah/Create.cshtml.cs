@@ -32,12 +32,12 @@ namespace GameCollection.Pages.Sarah
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Games == null || Games == null)
-            {
-                Console.WriteLine("something is wrong");
-                Console.WriteLine(ModelState.IsValid);
-                return Page();
-            }
+            //if (!ModelState.IsValid || _context.Games == null || Games == null)
+            //{
+              //  Console.WriteLine("something is wrong");
+                //Console.WriteLine(ModelState.IsValid);
+                //return Page();
+           
 
             _context.Games.Add(Games);
             await _context.SaveChangesAsync();
