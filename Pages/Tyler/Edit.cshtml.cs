@@ -30,13 +30,13 @@ namespace GameCollection.Pages.Tyler
                 return NotFound();
             }
 
-            var games =  await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
+            var games = await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
             if (games == null)
             {
                 return NotFound();
             }
             Games = games;
-           ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
+            ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
             return Page();
         }
 
@@ -44,10 +44,6 @@ namespace GameCollection.Pages.Tyler
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
 
             _context.Attach(Games).State = EntityState.Modified;
 
@@ -72,7 +68,7 @@ namespace GameCollection.Pages.Tyler
 
         private bool GamesExists(int id)
         {
-          return (_context.Games?.Any(e => e.ID == id)).GetValueOrDefault();
+            return (_context.Games?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }

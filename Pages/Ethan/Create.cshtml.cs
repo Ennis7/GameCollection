@@ -35,12 +35,7 @@ namespace GameCollection.Pages.Ethan
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid || Games == null)
-            {
-                ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
-                ViewData["GenreType"] = new SelectList(Enum.GetValues(typeof(Genre)).Cast<Genre>());
-                return Page();
-            }
+
 
             _context.Games.Add(Games);
             await _context.SaveChangesAsync();

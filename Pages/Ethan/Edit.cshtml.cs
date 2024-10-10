@@ -31,10 +31,7 @@ namespace GameCollection.Pages.Ethan
             }
 
             var games =  await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
-            if (games == null)
-            {
-                return NotFound();
-            }
+
             Games = games;
             ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
             ViewData["GenreType"] = new SelectList(Enum.GetValues(typeof(Genre)).Cast<Genre>());
@@ -45,31 +42,12 @@ namespace GameCollection.Pages.Ethan
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
-                ViewData["GenreType"] = new SelectList(Enum.GetValues(typeof(Genre)).Cast<Genre>());
-                return Page();
-            }
 
             _context.Attach(Games).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GamesExists(Games.ID))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
+                await _context.SaveChangesAsync();
+            
             return RedirectToPage("./Index");
         }
 
