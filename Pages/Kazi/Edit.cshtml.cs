@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -30,22 +29,46 @@ namespace GameCollection.Pages.Kazi
                 return NotFound();
             }
 
-            var games =  await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
+            var games = await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
             if (games == null)
             {
                 return NotFound();
             }
+
             Games = games;
-           ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
+
+            // Populate OwnerID dropdown
+            ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
+
+            // Populate GenreType dropdown
+            ViewData["GenreType"] = Enum.GetValues(typeof(Genre))
+                .Cast<Genre>()
+                .Select(g => new SelectListItem
+                {
+                    Value = g.ToString(),
+                    Text = g.ToString(),
+                    Selected = g == Games.GenreType // Select the current genre
+                }).ToList();
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            // Removed ModelState.IsValid check
+            if (_context.Games == null || Games == null)
             {
+                return Page();
+            }
+
+            // Parse the selected genre from the dropdown
+            if (Enum.TryParse<Genre>(Request.Form["Games.GenreType"], out var genre))
+            {
+                Games.GenreType = genre; // Set the parsed enum value
+            }
+            else
+            {
+                ModelState.AddModelError("Games.GenreType", "Invalid genre selected.");
                 return Page();
             }
 
@@ -72,7 +95,7 @@ namespace GameCollection.Pages.Kazi
 
         private bool GamesExists(int id)
         {
-          return (_context.Games?.Any(e => e.ID == id)).GetValueOrDefault();
+            return (_context.Games?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }

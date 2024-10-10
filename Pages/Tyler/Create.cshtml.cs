@@ -21,17 +21,21 @@ namespace GameCollection.Pages.Tyler
 
         public IActionResult OnGet()
         {
-            ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
+        ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
             return Page();
         }
 
         [BindProperty]
         public Games Games { get; set; } = default!;
-
+        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
+          if (!ModelState.IsValid || _context.Games == null || Games == null)
+            {
+                return Page();
+            }
 
             _context.Games.Add(Games);
             await _context.SaveChangesAsync();
