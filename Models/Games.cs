@@ -1,8 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GameCollection.Models
 {
+
     public enum Genre
     {
         Adventure,
@@ -14,7 +16,6 @@ namespace GameCollection.Models
         FPS,
         Puzzle
     }
-
     public class Games
     {
         public int ID { get; set; }
@@ -24,7 +25,6 @@ namespace GameCollection.Models
 
         [Required]
         public Genre GenreType { get; set; } = Genre.Adventure;
-
         [StringLength(60)]
         public string Developer { get; set; } = String.Empty;
 
@@ -37,10 +37,11 @@ namespace GameCollection.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal Price { get; set; } = 0;
 
-        // Foreign Key
+        //Foreign Key
         public int OwnerID { get; set; }
 
-        // Navigation Property
+        //Navigation Property
         public Owner Owner { get; set; } = null!;
     }
+
 }

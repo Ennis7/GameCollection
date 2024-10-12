@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,43 +21,22 @@ namespace GameCollection.Pages.Kazi
 
         public IActionResult OnGet()
         {
-            ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
-
-            ViewData["GenreType"] = Enum.GetValues(typeof(Genre))
-                .Cast<Genre>()
-                .Select(g => new SelectListItem
-                {
-                    Value = g.ToString(),
-                    Text = g.ToString()
-                }).ToList();
-
+        ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
             return Page();
         }
 
         [BindProperty]
         public Games Games { get; set; } = default!;
+        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            // Remove ModelState.IsValid check
-            if (_context.Games == null || Games == null)
+          if (!ModelState.IsValid || _context.Games == null || Games == null)
             {
                 return Page();
             }
 
-            // Parse the selected genre from the dropdown
-            if (Enum.TryParse<Genre>(Request.Form["Games.GenreType"], out var genre))
-            {
-                Games.GenreType = genre; // Set the parsed enum value
-            }
-            else
-            {
-                ModelState.AddModelError("Games.GenreType", "Invalid genre selected.");
-                return Page();
-            }
-
-            // Add the new game to the context and save
             _context.Games.Add(Games);
             await _context.SaveChangesAsync();
 

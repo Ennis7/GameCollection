@@ -36,7 +36,8 @@ namespace GameCollection.Migrations
                         .HasColumnType("nvarchar(60)");
 
                     b.Property<int>("GenreType")
-                        .HasColumnType("int");
+                        .HasMaxLength(30)
+                        .HasColumnType("int)");
 
                     b.Property<int>("OwnerID")
                         .HasColumnType("int");
