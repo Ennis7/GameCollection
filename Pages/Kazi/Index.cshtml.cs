@@ -40,6 +40,14 @@ namespace GameCollection.Pages.Kazi
             MinPrice = minPrice ?? string.Empty;
             MaxPrice = maxPrice ?? string.Empty;
 
+            // Set sort order properties
+            TitleSortOrder = sortOrder == "title" ? "title_desc" : "title";
+            GenreSortOrder = sortOrder == "genre" ? "genre_desc" : "genre";
+            DeveloperSortOrder = sortOrder == "developer" ? "developer_desc" : "developer";
+            ReleaseDateSortOrder = sortOrder == "releaseDate" ? "releaseDate_desc" : "releaseDate";
+            PriceSortOrder = sortOrder == "price" ? "price_desc" : "price";
+            OwnerSortOrder = sortOrder == "owner" ? "owner_desc" : "owner";
+
             IQueryable<Games> gamesQuery = _context.Games.Include(g => g.Owner);
             gamesQuery = gamesQuery.Where(g => g.OwnerID == 4);
 

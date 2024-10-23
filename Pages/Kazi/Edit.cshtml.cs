@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -13,9 +12,9 @@ namespace GameCollection.Pages.Kazi
 {
     public class EditModel : PageModel
     {
-        private readonly GameCollection.Data.GameCollectionContext _context;
+        private readonly GameCollectionContext _context;
 
-        public EditModel(GameCollection.Data.GameCollectionContext context)
+        public EditModel(GameCollectionContext context)
         {
             _context = context;
         }
@@ -30,29 +29,38 @@ namespace GameCollection.Pages.Kazi
                 return NotFound();
             }
 
-            var games =  await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
+            var games = await _context.Games.FirstOrDefaultAsync(m => m.ID == id);
             if (games == null)
             {
                 return NotFound();
             }
+
             Games = games;
-           ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
+
+            // dropdown
+            ViewData["OwnerID"] = new SelectList(_context.Owner, "ID", "ID");
+
+            // dropdown
+            ViewData["GenreType"] = Enum.GetValues(typeof(Genre))
+                .Cast<Genre>()
+                .Select(g => new SelectListItem
+                {
+                    Value = g.ToString(),
+                    Text = g.ToString()
+                }).ToList();
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
+   
+      
             _context.Attach(Games).State = EntityState.Modified;
 
             try
             {
+                // Attempt to save changes
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
@@ -63,16 +71,18 @@ namespace GameCollection.Pages.Kazi
                 }
                 else
                 {
-                    throw;
+                    throw; 
                 }
             }
 
             return RedirectToPage("./Index");
         }
 
+
+
         private bool GamesExists(int id)
         {
-          return (_context.Games?.Any(e => e.ID == id)).GetValueOrDefault();
+            return (_context.Games?.Any(e => e.ID == id)).GetValueOrDefault();
         }
     }
 }
